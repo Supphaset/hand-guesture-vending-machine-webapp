@@ -9,10 +9,6 @@ const app = express()
 
 app.use(express.json())
 
-app.get('/',(req,res)=>{
-    res.send('API is running...')
-})
-
 app.get('/api/items',async (req,res)=>{
     const items = await Table.find({})
     res.json(items)
@@ -28,13 +24,11 @@ app.put('/api/subtract/:id', async (req,res)=>{
     res.json(item)
 })
 
-const __dirname = path.resolve()
-
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '/frontend/build')))
+  app.use(express.static(path.join(__dirname, '../frontend/build')))
 
   app.get('*', (req, res) =>
-    res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'))
+    res.sendFile(path.resolve(__dirname, '../frontend', 'build', 'index.html'))
   )
 } else {
   app.get('/', (req, res) => {
